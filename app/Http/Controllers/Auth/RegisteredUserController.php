@@ -36,10 +36,17 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $stripe = new \Stripe\StripeClient(config('stripe.secret'));
+        $customer = $stripe->customers->create([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'stripe_customer_id' => $customer->id,
         ]);
 
         event(new Registered($user));

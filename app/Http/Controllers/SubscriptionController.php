@@ -12,9 +12,6 @@ class SubscriptionController extends Controller
 {
     public function form()
     {
-
-        dispatch(new RenewSubscription());
-
         $user = Auth::user();
         $userId = $user->id;
         $paymentIntents = StripePaymentIntent::where('user_id', $userId)->paginate(10);
@@ -47,6 +44,10 @@ class SubscriptionController extends Controller
         }
 
         return view('subscription', compact('subscriptionExpiry', 'paymentIntents', 'clientSecret', 'subscriptionActive', 'subscriptionDeclined'));
+    }
+
+    public function success(string $id) {
+        return view('success', compact('id'));
     }
 
     public function cancel()

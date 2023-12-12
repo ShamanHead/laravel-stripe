@@ -61,11 +61,12 @@
                                     card: cardElement
                                 }
                             }).then(function (confirmResult) {
+                                // debugger;
                                 if (confirmResult.error) {
                                     var errorElement = document.getElementById('card-errors');
                                     errorElement.textContent = confirmResult.error.message;
                                 } else {
-                                    window.location = '{{ route("success") }}'
+                                    window.location = 'success/' + confirmResult.paymentIntent.id
                                 }
                             });
                         });

@@ -10,7 +10,7 @@ class StripePaymentIntent extends Model
 {
     use HasFactory;
 
-    public $fillable = ['subscription_id', 'payment_method', 'amount', 'status', 'user_id'];
+    public $fillable = ['subscription_id', 'payment_method', 'amount', 'status', 'user_id', 'stripe_id'];
 
     public $table = 'payment_intent';
 

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('user_id')->references('id')->on('users');
+            $table->string('stripe_id', 100)->unique();
             $table->string('payment_method', 100)->nullable();
             $table->string('status_message', 255)->nullable();
             $table->string('status', 30);

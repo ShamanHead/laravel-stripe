@@ -25,9 +25,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/success', function () {
-        return view('success');
-    })->name('success');
+    Route::get('/success/{id}', [SubscriptionController::class, 'success'])->name('success');
 
     Route::get('/subscription', [SubscriptionController::class, 'form'])->name('subscription');
     Route::post('/subscription/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');

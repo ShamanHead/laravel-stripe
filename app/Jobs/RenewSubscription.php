@@ -60,16 +60,20 @@ class RenewSubscription implements ShouldQueue
                 ]);
                 if ($intent->status === 'succeeded') {
                     $intentDb = new StripePaymentIntent(
-                        ['payment_method' => $paymentMethod,
+                        [
+                            'payment_method' => $paymentMethod,
                             'user_id' => $sub->user->id,
                             'amount' => $intent->amount,
                             'status' => $intent->status,
                         ]
                     );
-                    $sub->update(['due_to' => Carbon::now()]);
+                    $dateTo = Carbon::now();
+                    $dateTo->addDays(30);
+                    $sub->update(['due_to' => $dateTo]);
                 } else {
                     $intentDb = new StripePaymentIntent(
-                        ['payment_method' => $paymentMethod,
+                        [
+                            'payment_method' => $paymentMethod,
                             'user_id' => $sub->user->id,
                             'amount' => $intent->amount,
                             'status_message' => $intent->last_payment_error->message,
